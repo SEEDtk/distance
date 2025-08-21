@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.theseed.basic.ParseFailureException;
 import org.theseed.genome.Genome;
 import org.theseed.p3api.P3Genome;
@@ -29,8 +27,6 @@ import org.theseed.p3api.P3Genome;
 public class TaxonDistanceMethod extends DistanceMethod {
 
     // FIELDS
-    /** logging facility */
-    protected static Logger log = LoggerFactory.getLogger(TaxonDistanceMethod.class);
     /** ranking list */
     private static final String[] LEVELS = new String[] { "superkingdom", "phylum", "class", "order", "family", "genus", "species" };
     /** value to indicate a missing taxon ID */
@@ -146,18 +142,15 @@ public class TaxonDistanceMethod extends DistanceMethod {
      */
     public String getGroupingLevel(TaxonDistanceMethod.Analysis m1, TaxonDistanceMethod.Analysis m2) {
         int diffLevel = this.getDiffLevel(m1, m2);
-        String retVal;
-        if (diffLevel == -1) {
-            // Here the genomes were the same across the whole lineage.
-            retVal = LEVELS[LEVELS.length - 1];
-        } else if (diffLevel == 0) {
-            // Here the genomes belong to different superkingdoms.
-            retVal = "cellular organism";
-        } else {
-            // "diffLevel" is the first point where the lineages disagree, so we back up one to get
-            // the group they both belong to.
-            retVal = LEVELS[diffLevel - 1];
-        }
+        // The difference level tells us where the genomes diverge. A negative value means
+        // they were the same across the whole lineage. A zero means they belong to different
+        // superkingdoms. Otherwise, "diffLevel" is the first point where the
+        // lineages disagree, so we back up one to get the group they both belong to.
+        String retVal = switch (diffLevel) {
+            case -1 -> LEVELS[LEVELS.length - 1];
+            case 0 -> "cellular organism";
+            default -> LEVELS[diffLevel - 1];
+        };
         return retVal;
     }
 

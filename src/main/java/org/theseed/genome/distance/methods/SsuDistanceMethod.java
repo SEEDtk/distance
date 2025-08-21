@@ -5,8 +5,6 @@ package org.theseed.genome.distance.methods;
 
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.theseed.basic.ParseFailureException;
 import org.theseed.genome.Feature;
 import org.theseed.genome.Genome;
@@ -29,8 +27,6 @@ import org.theseed.sequence.RnaKmers;
 public class SsuDistanceMethod extends DistanceMethod {
 
     // FIELDS
-    /** logging facility */
-    protected static Logger log = LoggerFactory.getLogger(SsuDistanceMethod.class);
     /** DNA kmer size */
     private int kSize;
 
@@ -40,7 +36,7 @@ public class SsuDistanceMethod extends DistanceMethod {
     protected class Analysis extends Measurer {
 
         /** sequence kmers for the SSUs */
-        private RnaKmers kmers;
+        private final RnaKmers kmers;
 
         /**
          * @param genome

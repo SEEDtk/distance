@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.theseed.counters.CountMap;
 import org.theseed.genome.Genome;
 import org.theseed.p3api.P3Genome;
@@ -33,6 +35,8 @@ import org.theseed.proteins.RoleMap;
 public class ProfileDistanceMethod extends DistanceMethod {
 
     // FIELDS
+    /** logging facility */
+    private static final Logger log = LoggerFactory.getLogger(ProfileDistanceMethod.class);
     /** role map to use */
     private RoleMap profileRoles;
     /** role ID vector used to fill count vectors */
@@ -58,7 +62,7 @@ public class ProfileDistanceMethod extends DistanceMethod {
         public Analysis(Genome genome) {
             super(genome);
             // Count all the role IDs.  CountMap is horribly not thread-safe, so this can't be parallelized.
-            CountMap<String> roleCounts = new CountMap<String>();
+            CountMap<String> roleCounts = new CountMap<>();
             genome.getFeatures().stream().filter(x -> x.getType().contentEquals("CDS"))
                     .flatMap(x -> x.getUsefulRoles(ProfileDistanceMethod.this.profileRoles).stream())
                     .forEach(x -> roleCounts.count(x.getId()));
@@ -100,7 +104,7 @@ public class ProfileDistanceMethod extends DistanceMethod {
             this.profileRoles = RoleMap.load(roleFile);
         }
         // Sort the roles to form the scan list.  We use the scan list to fill each vector.
-        this.sortedRoles = new ArrayList<String>(this.profileRoles.keySet());
+        this.sortedRoles = new ArrayList<>(this.profileRoles.keySet());
         Collections.sort(this.sortedRoles);
         this.roleCount = this.sortedRoles.size();
         log.info("{} roles in the profile vector.", this.roleCount);

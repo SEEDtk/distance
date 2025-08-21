@@ -24,7 +24,7 @@ import org.theseed.genome.Genome;
 public class TestMethods {
 
     /** logging facility */
-    protected static Logger log = LoggerFactory.getLogger(TestMethods.class);
+    private static final Logger log = LoggerFactory.getLogger(TestMethods.class);
     /** test genome IDs, in order of increasing distance */
     public static final String[] TEST_GENOMES = new String[] { "1062.144", "366616.15", "2720031.3", "272844.11" };
     /** main genome ID */

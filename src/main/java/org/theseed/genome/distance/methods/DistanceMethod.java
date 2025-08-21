@@ -33,7 +33,7 @@ public abstract class DistanceMethod implements AutoCloseable {
 
     // FIELDS
     /** logging facility */
-    protected static Logger log = LoggerFactory.getLogger(DistanceMethod.class);
+    private static final Logger log = LoggerFactory.getLogger(DistanceMethod.class);
     /** role definition map */
     protected static RoleMap roleMap;
     /** name of this method */

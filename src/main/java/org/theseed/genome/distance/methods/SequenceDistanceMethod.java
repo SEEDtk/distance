@@ -46,7 +46,7 @@ public abstract class SequenceDistanceMethod extends DistanceMethod {
 
     // FIELDS
     /** logging facility */
-    protected static Logger log = LoggerFactory.getLogger(SequenceDistanceMethod.class);
+    private static final Logger log = LoggerFactory.getLogger(SequenceDistanceMethod.class);
     /** role map to use */
     private RoleMap protRoles;
     /** protein kmer size */

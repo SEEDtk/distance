@@ -7,8 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.theseed.basic.ParseFailureException;
 import org.theseed.genome.Genome;
 import org.theseed.p3api.P3Genome;
@@ -27,8 +26,6 @@ import org.theseed.sequence.GenomeKmers;
 public class DnaDistanceMethod extends DistanceMethod {
 
     // FIELDS
-    /** logging facility */
-    protected static Logger log = LoggerFactory.getLogger(DnaDistanceMethod.class);
     /** DNA kmer size */
     private int kSize;
 
@@ -102,10 +99,7 @@ public class DnaDistanceMethod extends DistanceMethod {
             return false;
         }
         DnaDistanceMethod other = (DnaDistanceMethod) obj;
-        if (this.kSize != other.kSize) {
-            return false;
-        }
-        return true;
+        return (this.kSize == other.kSize);
     }
 
     @Override

@@ -18,7 +18,7 @@ import org.theseed.genome.Genome;
 class TestAni {
 
     /** logging facility */
-    protected static Logger log = LoggerFactory.getLogger(TestAni.class);
+    private static final Logger log = LoggerFactory.getLogger(TestAni.class);
 
 
     @Test

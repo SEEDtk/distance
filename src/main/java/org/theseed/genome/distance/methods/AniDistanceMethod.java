@@ -48,7 +48,7 @@ public class AniDistanceMethod extends DistanceMethod {
 
     // FIELDS
     /** logging facility */
-    protected static Logger log = LoggerFactory.getLogger(AniDistanceMethod.class);
+    private static final Logger log = LoggerFactory.getLogger(AniDistanceMethod.class);
     /** temporary directory for working files */
     private File tempDir;
     /** minimum identity */

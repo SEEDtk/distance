@@ -42,7 +42,7 @@ public class FileDistanceMethod extends DistanceMethod {
 
     // FIELDS
     /** logging facility */
-    protected static Logger log = LoggerFactory.getLogger(FileDistanceMethod.class);
+    private static final Logger log = LoggerFactory.getLogger(FileDistanceMethod.class);
     /** map of genome IDs to distances maps loaded from the file */
     Map<String, Map<String,Double>> distanceMap;
     /** name for this method */

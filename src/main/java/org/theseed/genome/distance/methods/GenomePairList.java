@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 import org.theseed.counters.CountMap;
 
 /**
@@ -29,7 +30,7 @@ public class GenomePairList implements Iterable<GenomePairList.Pair> {
     /** list of pair objects */
     private List<Pair> pairs;
     /** genome occurrence counts */
-    private CountMap<String> counts;
+    private final CountMap<String> counts;
     /** set of pairs already inserted */
     private Set<Pair> pairSet;
     /** default list size */
@@ -149,8 +150,8 @@ public class GenomePairList implements Iterable<GenomePairList.Pair> {
      * Create an empty genome pair list.
      */
     public GenomePairList() {
-        this.counts = new CountMap<String>();
-        this.pairSet = new HashSet<Pair>(LIST_SIZE);
+        this.counts = new CountMap<>();
+        this.pairSet = new HashSet<>(LIST_SIZE);
         this.pairs = null;
     }
 
@@ -170,7 +171,7 @@ public class GenomePairList implements Iterable<GenomePairList.Pair> {
      */
     public void prepare() {
         // Transfer the pairs from the set to the list.  The set helped us to remove duplicates.
-        this.pairs = new ArrayList<Pair>(this.pairSet);
+        this.pairs = new ArrayList<>(this.pairSet);
         // Free up the pair-set memory.
         this.pairSet = null;
         // Fix up the pairs using the finished counts.
@@ -188,7 +189,7 @@ public class GenomePairList implements Iterable<GenomePairList.Pair> {
      * @return the number of pairs in this list
      */
     public int size() {
-        int retVal = 0;
+        int retVal;
         if (this.pairSet != null)
             retVal = this.pairSet.size();
         else
@@ -209,7 +210,7 @@ public class GenomePairList implements Iterable<GenomePairList.Pair> {
      * @return a set of the IDs in this pair list
      */
     public SortedSet<String> getIdSet() {
-        SortedSet<String> retVal = new TreeSet<String>();
+        SortedSet<String> retVal = new TreeSet<>();
         // We have to figure out where the pairs are.
         Collection<Pair> pairings = this.pairSet;
         if (pairings == null) pairings = this.pairs;

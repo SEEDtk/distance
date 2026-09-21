@@ -59,9 +59,9 @@ public class FileDistanceMethod extends DistanceMethod {
     protected class Analysis extends Measurer {
 
         /** distance map for this genome */
-        private Map<String, Double> gMap;
+        private final Map<String, Double> gMap;
         /** ID of this genome */
-        private String genomeId;
+        private final String genomeId;
 
         /**
          * Get the distance map for the specified genome.
@@ -102,7 +102,7 @@ public class FileDistanceMethod extends DistanceMethod {
         if (Math.abs(scaleFactor) < 1e-10)
             throw new ParseFailureException("m0 and m1 are too close together in FILE method for file " + inFile + ".");
         // Create the master hash.
-        this.distanceMap = new HashMap<String, Map<String, Double>>(100);
+        this.distanceMap = new HashMap<>(100);
         // Now read in the file.
         try (TabbedLineReader inStream = new TabbedLineReader(inFile)) {
             int col1Idx = inStream.findField(col1Name);

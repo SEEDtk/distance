@@ -178,7 +178,7 @@ public abstract class DistanceMethod implements AutoCloseable {
      */
     public void parseParmString(String parse) throws IOException, ParseFailureException {
         // Build the keyword map.
-        Map<String, String> keywords = new TreeMap<String, String>();
+        Map<String, String> keywords = new TreeMap<>();
         String[] parms = StringUtils.split(parse);
         for (String parm : parms) {
             int sep = parm.indexOf('=');
@@ -289,12 +289,13 @@ public abstract class DistanceMethod implements AutoCloseable {
         boolean retVal;
         if (val == null)
             retVal = defaultVal;
-        else if (val.contentEquals("Y"))
-            retVal = true;
-        else if (val.contentEquals("N"))
-            retVal = false;
-        else
-            throw new ParseFailureException("Invalid Y/N flag for keyword " + key + ".");
+        else {
+            switch (val) {
+            case "Y" -> retVal = true;
+            case "N" -> retVal = false;
+            default -> throw new ParseFailureException("Invalid Y/N flag for keyword " + key + ".");
+            }
+        }
         return retVal;
     }
 
@@ -315,7 +316,7 @@ public abstract class DistanceMethod implements AutoCloseable {
         if (val == null)
             retVal = defaultVal;
         else try {
-            retVal = Integer.valueOf(val);
+            retVal = Integer.parseInt(val);
         } catch (NumberFormatException e) {
             throw new ParseFailureException("Invalid numeric for keyword " + key + ".");
         }
@@ -339,7 +340,7 @@ public abstract class DistanceMethod implements AutoCloseable {
         if (val == null)
             retVal = defaultVal;
         else try {
-            retVal = Double.valueOf(val);
+            retVal = Double.parseDouble(val);
         } catch (NumberFormatException e) {
             throw new ParseFailureException("Invalid numeric for keyword " + key + ".");
         }

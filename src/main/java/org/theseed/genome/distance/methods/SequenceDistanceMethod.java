@@ -62,7 +62,7 @@ public abstract class SequenceDistanceMethod extends DistanceMethod {
     protected class Analysis extends Measurer {
 
         /** hash of role IDs to kmers */
-        private Map<String, ProteinKmers> kmerMap;
+        private final Map<String, ProteinKmers> kmerMap;
 
         /**
          * Analyze a genome's proteins to produce the kmers.
@@ -75,7 +75,7 @@ public abstract class SequenceDistanceMethod extends DistanceMethod {
             // Loop through the genome features, scanning for useful pegs and storing the sequences.
             genome.getFeatures().parallelStream().forEach(x -> this.scanFeature(protMap, x));
             // Roll up the sequences into a protein kmer map.
-            this.kmerMap = new HashMap<String, ProteinKmers>(protMap.size() * 4 / 3);
+            this.kmerMap = new HashMap<>(protMap.size() * 4 / 3);
             for (var protEntry : protMap.entrySet()) {
                 ProteinKmers kmers = new ProteinKmers(protEntry.getValue(), SequenceDistanceMethod.this.kSize);
                 this.kmerMap.put(protEntry.getKey(), kmers);
